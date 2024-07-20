@@ -25,7 +25,7 @@ jobs:
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
       - name: Install Dependencies
-        run: CI=false composer clear-cache && CI=false composer install && CI=false php artisan key:generate
+        run: CI=false composer clear-cache && CI=false composer update && CI=false php artisan key:generate
 
       - name: Run Tests
         run: CI=false php artisan test
@@ -45,7 +45,7 @@ jobs:
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
       - name: Install Dependencies
-        run: CI=false composer clear-cache && CI=false composer install && CI=false php artisan key:generate
+        run: CI=false composer clear-cache && CI=false composer update && CI=false php artisan key:generate
 
       - name: Update apt repositories
         run: sudo apt update

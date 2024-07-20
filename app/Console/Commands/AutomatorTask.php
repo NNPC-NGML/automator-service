@@ -2,9 +2,10 @@
 
 namespace App\Console\Commands;
 
-use App\Jobs\Automator\AutomatorTaskBroadcasterJob;
-use App\Service\AutomatorTaskService;
 use Illuminate\Console\Command;
+use App\Service\AutomatorTaskService;
+use App\Jobs\AutomatorTask\AutomatorTaskCreated;
+
 
 class AutomatorTask extends Command
 {
@@ -32,7 +33,7 @@ class AutomatorTask extends Command
         //study argument data to know if to create a new task or to update task using processflow history id
         if ($task = $createService->createTask($data)) {
             // pushcreated task to all the queue that needs the data 
-            AutomatorTaskBroadcasterJob::dispatch($task->toArray())->onQueue(["processflow-service", "formbuilder_service", "notification_service"]);
+            AutomatorTaskCreated::dispatch($task->toArray())->onQueue(["processflow-service", "formbuilder_service", "notification_service"]);
 
             $this->info("Task created successfully");
         } else {

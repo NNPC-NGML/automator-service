@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4b45a0c334485d988b584bf93b967649",
+    "content-hash": "9e55c844439034b17b694268246dfbf1",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -3978,16 +3978,16 @@
         },
         {
             "name": "skillz/nnpcreusable",
-            "version": "v1.4.9",
+            "version": "v1.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/NNPC-NGML/nnpcreuseable.git",
-                "reference": "db32b534d1623b466d675b8b3bb3dcba8b6cd10f"
+                "reference": "26a16acd622fdd8561919bd548fac6c0e8b98dfa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/NNPC-NGML/nnpcreuseable/zipball/db32b534d1623b466d675b8b3bb3dcba8b6cd10f",
-                "reference": "db32b534d1623b466d675b8b3bb3dcba8b6cd10f",
+                "url": "https://api.github.com/repos/NNPC-NGML/nnpcreuseable/zipball/26a16acd622fdd8561919bd548fac6c0e8b98dfa",
+                "reference": "26a16acd622fdd8561919bd548fac6c0e8b98dfa",
                 "shasum": ""
             },
             "require": {
@@ -4020,9 +4020,9 @@
             "description": "nnpc reusable services",
             "support": {
                 "issues": "https://github.com/NNPC-NGML/nnpcreuseable/issues",
-                "source": "https://github.com/NNPC-NGML/nnpcreuseable/tree/v1.4.9"
+                "source": "https://github.com/NNPC-NGML/nnpcreuseable/tree/v1.5.2"
             },
-            "time": "2024-07-16T10:36:29+00:00"
+            "time": "2024-07-20T16:47:33+00:00"
         },
         {
             "name": "swagger-api/swagger-ui",

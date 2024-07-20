@@ -1,13 +1,14 @@
 name: nnpc_automator_deploy
-
 on:
-  # push:
-  #   # branches:
-  #   #   - main
-  pull_request:
-    branches:
-      - feature/NGMC-223-create-console-application-for-new-task
-    types: [closed]
+  push:
+# on:
+#   # push:
+#   #   # branches:
+#   #   #   - main
+#   pull_request:
+#     branches:
+#       - feature/NGMC-223-create-console-application-for-new-task
+#     types: [closed]
 
 jobs:
   deploy-automator-test:

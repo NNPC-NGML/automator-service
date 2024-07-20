@@ -53,6 +53,53 @@ jobs:
       - name: Install rsync
         run: sudo apt-get install -y rsync
 
+      # - name: Find and replace nnpc reusable env variables
+      #   run: |
+      #     sed -i -e 's:AUTOMATOR_TASK_CREATED=forge:AUTOMATOR_TASK_CREATED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:AUTOMATOR_TASK_UPDATED=forge:AUTOMATOR_TASK_UPDATED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:AUTOMATOR_TASK_DELETED=forge:AUTOMATOR_TASK_DELETED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:CUSTOMER_CREATED=forge:CUSTOMER_CREATED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:CUSTOMER_UPDATED=forge:CUSTOMER_UPDATED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:CUSTOMER_DELETED=forge:CUSTOMER_DELETED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:CUSTOMER_SITE_CREATED=forge:CUSTOMER_SITE_CREATED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:CUSTOMER_SITE_UPDATED=forge:CUSTOMER_SITE_UPDATED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:CUSTOMER_SITE_DELETED=forge:CUSTOMER_SITE_DELETED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:DEPARTMENT_CREATED=forge:DEPARTMENT_CREATED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:DEPARTMENT_UPDATED=forge:DEPARTMENT_UPDATED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:DEPARTMENT_DELETED=forge:DEPARTMENT_DELETED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:DESIGNATION_CREATED=forge:DESIGNATION_CREATED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:DESIGNATION_UPDATED=forge:DESIGNATION_UPDATED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:DESIGNATION_DELETED=forge:DESIGNATION_DELETED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:FORM_BUILDER_CREATED=forge:FORM_BUILDER_CREATED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:FORM_BUILDER_UPDATED=forge:FORM_BUILDER_UPDATED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:FORM_BUILDER_DELETED=forge:FORM_BUILDER_DELETED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:FORM_DATA_CREATED=forge:FORM_DATA_CREATED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:FORM_DATA_UPDATED=forge:FORM_DATA_UPDATED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:FORM_DATA_DELETED=forge:FORM_DATA_DELETED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:NOTIFICATION_TASK_CREATED=forge:NOTIFICATION_TASK_CREATED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:NOTIFICATION_TASK_UPDATED=forge:NOTIFICATION_TASK_UPDATED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:NOTIFICATION_TASK_DELETED=forge:NOTIFICATION_TASK_DELETED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:PROCESSFLOW_CREATED=forge:PROCESSFLOW_CREATED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:PROCESSFLOW_UPDATED=forge:PROCESSFLOW_UPDATED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:PROCESSFLOW_DELETED=forge:PROCESSFLOW_DELETED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:PROCESSFLOW_STEP_CREATED=forge:PROCESSFLOW_STEP_CREATED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:PROCESSFLOW_STEP_UPDATED=forge:PROCESSFLOW_STEP_UPDATED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:PROCESSFLOW_STEP_DELETED=forge:PROCESSFLOW_STEP_DELETED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:PROCESSFLOW_HISTORY_CREATED=forge:PROCESSFLOW_HISTORY_CREATED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:PROCESSFLOW_HISTORY_UPDATED=forge:PROCESSFLOW_HISTORY_UPDATED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:PROCESSFLOW_HISTORY_DELETED=forge:PROCESSFLOW_HISTORY_DELETED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:ROUTE_CREATED=forge:ROUTE_CREATED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:ROUTE_UPDATED=forge:ROUTE_UPDATED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:ROUTE_DELETED=forge:ROUTE_DELETED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:UNIT_CREATED=forge:UNIT_CREATED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:UNIT_UPDATED=forge:UNIT_UPDATED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:UNIT_DELETED=forge:UNIT_DELETED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:USER_CREATED=forge:USER_CREATED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:USER_UPDATED=forge:USER_UPDATED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:USER_DELETED=forge:USER_DELETED=sample1,sample2:g' .env &&
+      #     sed -i -e 's:TAG_CREATED=forge:TAG_CREATED=sample1,sample2:g' .env 
+          
+
       - name: Find and replace in document
         run: |
           sed -i -e 's:/public/index.php:/index.php:g' public/index.php &&

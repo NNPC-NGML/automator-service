@@ -13,7 +13,7 @@
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "league/flysystem-aws-s3-v3": "^3.0",
-        "skillz-systems/user-service": "dev-main",
+        "skillz/nnpcreusable": "^1.4",
         "vladimir-yuldashev/laravel-queue-rabbitmq": "^14.0"
     },
     "require-dev": {

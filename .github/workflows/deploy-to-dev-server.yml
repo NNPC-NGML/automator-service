@@ -1,7 +1,7 @@
 name: nnpc_automator_deploy
-# on:
-#   push:
 on:
+  push:
+# on:
   # push:
   #   # branches:
   #   #   - main

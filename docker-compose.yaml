@@ -12,14 +12,6 @@ services:
     networks:
       - automator_network
 
-  automator_queue:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    command: "php artisan queue:work"
-    networks:
-      - automator_network
-
   mysql:
     image: mariadb:10.5.8
     environment:

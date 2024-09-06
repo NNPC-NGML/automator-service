@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('process_flows', function (Blueprint $table) {
-            $table->bigInteger('id')->primary();
+            $table->bigInteger("id")->primary();
             $table->string("name")->comment("The process flow name ");
             $table->integer("start_step_id")->comment("The process flow step id ")->nullable();
             $table->enum("frequency", ['daily', 'weekly', 'hourly', 'monthly', 'yearly', 'none'])->default('none');

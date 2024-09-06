@@ -28,23 +28,25 @@ class FormDataCreated implements ShouldQueue
      */
     public function handle(): void
     {
-        // this would be used by other services to determine how to handle the data that comes 
-        // get all tags 
-        $tagModel = Tag::all();
-        $fetschedData = $this->data['tag']["name"];
-        foreach ($tagModel as $tag) {
-            if ($tag->name == $fetschedData) {
-                $operationClass = new $tag->tag_class();
-                $operationClass->{$tag->tag_class_method}($this->data);
-            }
-        }
+        // if form data task id is not empty, update automator task with the form builder data id 
 
-        //pull the data from the queue data and point it the class that would handle it 
-        //use incoming class and method from queue and also pass the data thats coming in
-        // this section can be ignored if you want or commented out if you want
+        // // this would be used by other services to determine how to handle the data that comes 
+        // // get all tags 
+        // $tagModel = Tag::all();
+        // $fetschedData = $this->data['tag']["name"];
+        // foreach ($tagModel as $tag) {
+        //     if ($tag->name == $fetschedData) {
+        //         $operationClass = new $tag->tag_class();
+        //         $operationClass->{$tag->tag_class_method}($this->data);
+        //     }
+        // }
 
-        $service = new FormService();
-        $data = $this->data;
-        $service->createFormData($data);
+        // //pull the data from the queue data and point it the class that would handle it 
+        // //use incoming class and method from queue and also pass the data thats coming in
+        // // this section can be ignored if you want or commented out if you want
+
+        // $service = new FormService();
+        // $data = $this->data;
+        // $service->createFormData($data);
     }
 }

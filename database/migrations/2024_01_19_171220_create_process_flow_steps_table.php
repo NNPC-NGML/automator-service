@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('process_flow_steps', function (Blueprint $table) {
-            $table->bigInteger('id')->primary();
+            $table->bigInteger("id")->primary();
             $table->string("name")->comment('name of the step ');
             $table->string("step_route")->comment('step route ');
             $table->string("assignee_user_route")->comment('assignee user route ');

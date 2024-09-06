@@ -32,18 +32,20 @@ class FormDataUpdated implements ShouldQueue
      */
     public function handle(): void
     {
-        $tagModel = Tag::all();
-        $fetschedData = $this->data['tag']["name"];
-        foreach ($tagModel as $tag) {
-            if ($tag->name == $fetschedData) {
-                $operationClass = new $tag->tag_class();
-                $operationClass->{$tag->tag_class_method}($this->data);
-            }
-        }
+        // when form builder data has been created and task id is not empty update task to done and create a new task
+        
+        // $tagModel = Tag::all();
+        // $fetschedData = $this->data['tag']["name"];
+        // foreach ($tagModel as $tag) {
+        //     if ($tag->name == $fetschedData) {
+        //         $operationClass = new $tag->tag_class();
+        //         $operationClass->{$tag->tag_class_method}($this->data);
+        //     }
+        // }
 
-        // this area can be commented out if you do not need to have the form data saved or updated on your service
-        $service = new FormService();
-        $data = $this->data;
-        $service->updateFormData($data, $this->id);
+        // // this area can be commented out if you do not need to have the form data saved or updated on your service
+        // $service = new FormService();
+        // $data = $this->data;
+        // $service->updateFormData($data, $this->id);
     }
 }

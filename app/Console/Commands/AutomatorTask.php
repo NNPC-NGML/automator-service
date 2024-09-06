@@ -30,14 +30,17 @@ class AutomatorTask extends Command
     {
         $data = $this->argument('data');
         $createService = new AutomatorTaskService();
-        //study argument data to know if to create a new task or to update task using processflow history id
-        if ($task = $createService->createTask($data)) {
-            // pushcreated task to all the queue that needs the data 
-            AutomatorTaskCreated::dispatch($task->toArray())->onQueue(["processflow-service", "formbuilder_service", "notification_service"]);
+        if (empty($data['task_id'])) {
+            //study argument data to know if to create a new task or to update task using processflow history id
+            if ($task = $createService->createTask($data)) {
+                // pushcreated task to all the queue that needs the data 
 
-            $this->info("Task created successfully");
-        } else {
-            $this->info("Sorry could not create or update task");
+                AutomatorTaskCreated::dispatch($task->toArray())->onQueue(config("nnpcreusable.AUTOMATOR_TASK_CREATED"));
+
+                $this->info("Task created successfully");
+            } else {
+                $this->info("Sorry could not create or update task");
+            }
         }
     }
 }

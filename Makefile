@@ -32,7 +32,7 @@ install: ## Run composer install
 	docker exec ${CONTAINER_PHP} composer install
 
 migrate: ## Run migration files
-	docker exec ${CONTAINER_PHP} php artisan migrate
+	docker-compose exec ${CONTAINER_PHP} php artisan migrate
 
 migrate-fresh: ## Clear database and run all migrations
 	docker exec ${CONTAINER_PHP} php artisan migrate:fresh

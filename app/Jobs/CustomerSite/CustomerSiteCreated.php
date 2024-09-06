@@ -1,20 +1,21 @@
 <?php
 
-namespace App\Jobs\ProcessflowServiceJobs;
+namespace App\Jobs\CustomerSite;
+
 
 use Illuminate\Bus\Queueable;
+use Skillz\Nnpcreusable\Service\CustomerService;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Artisan;
 
-class ProcessflowHistoryJob implements ShouldQueue
+class CustomerSiteCreated implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * The data for task creation or update.
+     * The data for creating the unit.
      *
      * @var array
      */
@@ -32,10 +33,13 @@ class ProcessflowHistoryJob implements ShouldQueue
 
     /**
      * Execute the job.
-     * @description create a new task or update an existing task 
+     *
+     * @return void
      */
     public function handle(): void
     {
-        Artisan::call('app:automator-task', ['data' => $this->data]);
+
+        $service = new  CustomerService();
+        $service->createCustomerSite($this->data);
     }
 }

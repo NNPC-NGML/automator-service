@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->integer("processflow_history_id")->nullable()->comment("This column would hold the processflow history id, which comes from processflow service");
             $table->integer("formbuilder_data_id")->nullable()->comment("This column would hold the formbuilder data id, which can comes from processflow service or from formbuilder service");
-            $table->integer("customer_id")->nullable()->comment("This column would hold the customer id, which can comes from  formbuilder service or from automator service");
+            $table->string("entity")->nullable()->comment("This column would help to indicate if its a customer related task, supplies etc ");
+            $table->integer("entity_id")->nullable()->comment("This column would hold the id of the entity");
+            $table->integer("entity_site_id")->nullable()->comment("This column would hold the id of the entity site, only if the entity has multiple site");
             $table->integer("user_id")->nullable()->comment("This column would hold the user id, which can comes from  processflow service or from automator service");
             $table->integer("processflow_id")->nullable()->comment("This column would hold the processflow id, which can comes from  processflow service or from automator service");
             $table->integer("processflow_step_id")->nullable()->comment("This column would hold the processflow step id, which can comes from  processflow service or from automator service");

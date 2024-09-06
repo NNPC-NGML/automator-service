@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "66e5fa703817cf92dafd3a0e2b8ffe96",
+    "content-hash": "9e55c844439034b17b694268246dfbf1",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -3977,35 +3977,52 @@
             "time": "2023-11-08T05:53:05+00:00"
         },
         {
-            "name": "skillz-systems/user-service",
-            "version": "dev-main",
+            "name": "skillz/nnpcreusable",
+            "version": "v1.5.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Skillz-systems/skills_user_service_package.git",
-                "reference": "8831e1479fb922100bc19872da91be0557ee46de"
+                "url": "https://github.com/NNPC-NGML/nnpcreuseable.git",
+                "reference": "26a16acd622fdd8561919bd548fac6c0e8b98dfa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Skillz-systems/skills_user_service_package/zipball/8831e1479fb922100bc19872da91be0557ee46de",
-                "reference": "8831e1479fb922100bc19872da91be0557ee46de",
+                "url": "https://api.github.com/repos/NNPC-NGML/nnpcreuseable/zipball/26a16acd622fdd8561919bd548fac6c0e8b98dfa",
+                "reference": "26a16acd622fdd8561919bd548fac6c0e8b98dfa",
                 "shasum": ""
             },
             "require": {
                 "laravel/framework": "^10.10"
             },
-            "default-branch": true,
+            "require-dev": {
+                "laravel/legacy-factories": "^1.1",
+                "orchestra/testbench": "^9.1"
+            },
             "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Skillz\\Nnpcreusable\\Providers\\NnpcreusableProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Skillz\\Nnpcreusable\\": "src/"
+                }
+            },
             "notification-url": "https://packagist.org/downloads/",
             "authors": [
                 {
-                    "name": "Skillz Systems",
-                    "email": "info@skillzsystems.com.ng"
+                    "name": "kingsley achumie",
+                    "email": "kingsonly13c@gmail.com"
                 }
             ],
+            "description": "nnpc reusable services",
             "support": {
-                "source": "https://github.com/Skillz-systems/skills_user_service_package/tree/main"
+                "issues": "https://github.com/NNPC-NGML/nnpcreuseable/issues",
+                "source": "https://github.com/NNPC-NGML/nnpcreuseable/tree/v1.5.2"
             },
-            "time": "2024-04-12T13:07:55+00:00"
+            "time": "2024-07-20T16:47:33+00:00"
         },
         {
             "name": "swagger-api/swagger-ui",
@@ -9172,14 +9189,12 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "skillz-systems/user-service": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.1"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }

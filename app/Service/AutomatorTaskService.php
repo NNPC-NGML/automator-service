@@ -57,7 +57,7 @@ class AutomatorTaskService
             }
 
             if ($automatorTask->entity_site_id > 0) {
-                $newData["entity_site_id"] = $automatorTask->entity_id;
+                $newData["entity_site_id"] = $automatorTask->entity_site_id;
             }
             $newData["processflow_id"] = $automatorTask->processflow_id;
             $newData["processflow_step_id"] = $automatorTask->processflowStep->next_step_id;

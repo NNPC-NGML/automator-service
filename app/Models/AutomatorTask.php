@@ -11,6 +11,7 @@ class AutomatorTask extends Model
 
     // if a task has been completed 
     const COMPLETED = 1;
+    const PENDING = 0;
 
     protected $fillable = [
         "processflow_history_id",

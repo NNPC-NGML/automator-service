@@ -61,7 +61,7 @@ class AutomatorTaskService
             }
             $newData["processflow_id"] = $automatorTask->processflow_id;
             $newData["processflow_step_id"] = $automatorTask->processflowStep->next_step_id;
-            $newData["task_status"] = 0;
+            $newData["task_status"] = AutomatorTask::PENDING;
             return $this->createTask($newData);
         }
         return $automatorTask;

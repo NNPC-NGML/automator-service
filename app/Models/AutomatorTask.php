@@ -16,6 +16,7 @@ class AutomatorTask extends Model
     protected $fillable = [
         "processflow_history_id",
         "formbuilder_data_id",
+        "entity",
         "entity_id",
         "entity_site_id",
         "user_id",

@@ -33,9 +33,10 @@ class AutomatorTask extends Command
         if (empty($data['task_id'])) {
             //study argument data to know if to create a new task or to update task using processflow history id
             if ($task = $createService->createTask($data)) {
-                // pushcreated task to all the queue that needs the data 
-
-                AutomatorTaskCreated::dispatch($task->toArray())->onQueue(config("nnpcreusable.AUTOMATOR_TASK_CREATED"));
+                // push created task to all the queue that needs the data 
+                foreach (config("nnpcreusable.AUTOMATOR_TASK_CREATED") as $queue) {
+                    AutomatorTaskCreated::dispatch($task->toArray())->onQueue($queue);
+                }
 
                 $this->info("Task created successfully");
             } else {

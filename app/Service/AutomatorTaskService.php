@@ -28,14 +28,29 @@ class AutomatorTaskService
      *
      * @param Array $data  holds valid data for the new task.
      *
-     * @return \App\Models\AutomatorTask \ Illuminate\Support\MessageBag The updated task model & MessageBag when there is an error.
+     * @return bool
      */
-    public function updateTask($data)
+    public function updateTask($id, $data)
     {
-        $getTask = AutomatorTask::findOrFail($data["id"]);
+        $getTask = AutomatorTask::findOrFail($id);
         if ($getTask) {
             $updateTask = $getTask->update($data);
             return $updateTask;
+        }
+        return false;
+    }
+    /**
+     * Update automator task.
+     *
+     * @param Array $data  holds valid data for the new task.
+     *
+     * @return \App\Models\AutomatorTask \ Illuminate\Support\MessageBag The updated task model & MessageBag when there is an error.
+     */
+    public function getTask($id)
+    {
+        $getTask = AutomatorTask::findOrFail($id);
+        if ($getTask) {
+            return $getTask;
         }
         return false;
     }
@@ -44,26 +59,27 @@ class AutomatorTaskService
     {
         //get automator task with relationship
         $automatorTask = AutomatorTask::find($data["id"])->with(["processflowHistory", "processflow", "processflowStep"])->first();
-        if ($automatorTask->processflowStep->next_step_id > 0) {
-            $newData = [];
-            if ($automatorTask->processflowStep->next_user_designation < 1) {
-                // use previous user
-                $newData["user_id"] = $automatorTask->user_id;
-            } else {
-                // dynamicaly search for a user based on the next step data for user 
-            }
-            if ($automatorTask->entity_id > 0) {
-                $newData["entity_id"] = $automatorTask->entity_id;
-            }
+        if ($automatorTask) {
+            if ($automatorTask->processflowStep->next_step_id > 0) {
+                $newData = [];
+                if ($automatorTask->processflowStep->next_user_designation < 1) {
+                    // use previous user
+                    $newData["user_id"] = $automatorTask->user_id;
+                } else {
+                    // dynamicaly search for a user based on the next step data for user 
+                }
+                if ($automatorTask->entity_id > 0) {
+                    $newData["entity_id"] = $automatorTask->entity_id;
+                }
 
-            if ($automatorTask->entity_site_id > 0) {
-                $newData["entity_site_id"] = $automatorTask->entity_site_id;
+                if ($automatorTask->entity_site_id > 0) {
+                    $newData["entity_site_id"] = $automatorTask->entity_site_id;
+                }
+                $newData["processflow_id"] = $automatorTask->processflow_id;
+                $newData["processflow_step_id"] = $automatorTask->processflowStep->next_step_id;
+                $newData["task_status"] = AutomatorTask::PENDING;
+                return $this->createTask($newData);
             }
-            $newData["processflow_id"] = $automatorTask->processflow_id;
-            $newData["processflow_step_id"] = $automatorTask->processflowStep->next_step_id;
-            $newData["task_status"] = AutomatorTask::PENDING;
-            return $this->createTask($newData);
         }
-        return $automatorTask;
     }
 }

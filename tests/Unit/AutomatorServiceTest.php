@@ -40,7 +40,6 @@ class AutomatorServiceTest extends TestCase
         $getTask = AutomatorTask::find($createTask->id);
         //update task
         $data = [
-            "id" => $getTask->id,
             "formbuilder_data_id" => 1,
             "entity_id" => 1,
             "entity_site_id" => 1,
@@ -49,7 +48,7 @@ class AutomatorServiceTest extends TestCase
             "processflow_step_id" => 1,
             "task_status" => 1,
         ];
-        (new AutomatorTaskService())->updateTask($data);
+        (new AutomatorTaskService())->updateTask($getTask->id, $data);
         $this->assertDatabaseHas('automator_tasks', $data);
         //$this->assertInstanceOf(AutomatorTask::class, $automatorService);
 

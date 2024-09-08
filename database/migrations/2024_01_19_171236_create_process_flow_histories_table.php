@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer("user_id")->comment();
             $table->integer("for")->nullable()->comment();
             $table->integer("for_id")->nullable()->comment();
-            $table->integer("form_builder_id")->comment();
+            $table->integer("form_builder_id")->comment()->nullable();
             $table->integer("approval")->comment()->default(0);
             $table->integer("status")->comment()->default(1);
             $table->timestamps();

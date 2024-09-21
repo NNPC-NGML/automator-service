@@ -65,8 +65,12 @@ class AutomatorTaskService
                 if ($automatorTask->processflowStep->next_user_designation < 1) {
                     // use previous user
                     $newData["user_id"] = $automatorTask->user_id;
+                    $newData["assignment_status"] = AutomatorTask::ASSIGNED;
                 } else {
                     // dynamicaly search for a user based on the next step data for user 
+                    $dynamicUserData = [];
+                    $newData["user_id"] = $this->dynamicUser($dynamicUserData);
+                    $newData["assignment_status"] = AutomatorTask::UNASSIGNED;
                 }
                 if ($automatorTask->entity_id > 0) {
                     $newData["entity_id"] = $automatorTask->entity_id;
@@ -81,5 +85,9 @@ class AutomatorTaskService
                 return $this->createTask($newData);
             }
         }
+    }
+
+    public function dynamicUser($data): int
+    {
     }
 }

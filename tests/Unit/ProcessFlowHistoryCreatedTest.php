@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Jobs\ProcessFlowHistory;
+namespace Tests\Unit\ProcessFlowHistory;
 
 use Tests\TestCase;
 use App\Models\AutomatorTask;

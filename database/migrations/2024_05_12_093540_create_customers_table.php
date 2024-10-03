@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->bigInteger('id')->primary();
-            $table->string('company_name');
-            $table->string('company_email')->unique();
-            $table->boolean('is_active')->default(0);
+            $table->string("company_name")->comment();
+            $table->string('email')->unique()->comment();
+            $table->string('phone_number')->comment();
+            $table->string('password')->comment();
+            $table->integer("created_by_user_id")->comment();
+            $table->boolean('status')->default(0)->comment();
             $table->timestamps();
         });
     }

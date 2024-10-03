@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer("processflow_id")->nullable()->comment("This column would hold the processflow id, which can comes from  processflow service or from automator service");
             $table->integer("processflow_step_id")->nullable()->comment("This column would hold the processflow step id, which can comes from  processflow service or from automator service");
             $table->integer("task_status")->default(0)->comment("This column would hold the status of the task, which could be 0 as pending or 1 as done");
+            $table->integer("assignment_status")->default(0)->comment("This column would hold the assignment status of the task, which could be 0 as pending or 1 as done, note the assignment status is used to determine if the current task user_id is responsible for handling that said task");
             $table->timestamps();
         });
     }

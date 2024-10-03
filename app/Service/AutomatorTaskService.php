@@ -6,7 +6,9 @@ use App\Models\AutomatorTask;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-
+use Skillz\Nnpcreusable\Models\CustomerSite;
+use Skillz\Nnpcreusable\Models\HeadOfUnit;
+use Skillz\Nnpcreusable\Service\HeadOfUnitService;
 
 class AutomatorTaskService
 {
@@ -67,9 +69,18 @@ class AutomatorTaskService
                     $newData["user_id"] = $automatorTask->user_id;
                     $newData["assignment_status"] = AutomatorTask::ASSIGNED;
                 } else {
+                    //use $automatorTask->entity_site_id to get the customer zone
                     // dynamicaly search for a user based on the next step data for user 
-                    $dynamicUserData = [];
-                    $newData["user_id"] = $this->dynamicUser($dynamicUserData);
+
+                    $getCustomerZone = $this->getCustomerZone($automatorTask->entity_site_id);
+                    $dynamicUserData = [
+                        "location" => $getCustomerZone,
+                        //"department" => $automatorTask->processflowStep->next_user_department,
+                        "unit" => $automatorTask->processflowStep->next_user_unit,
+                        //"designation" => $automatorTask->processflowStep->next_user_designation,
+                    ];
+
+                    $newData["user_id"] = $this->getHeadOfUnit($dynamicUserData);
                     $newData["assignment_status"] = AutomatorTask::UNASSIGNED;
                 }
                 if ($automatorTask->entity_id > 0) {
@@ -87,7 +98,25 @@ class AutomatorTaskService
         }
     }
 
-    public function dynamicUser($data): int
+    public function getHeadOfUnit($data): int
     {
+        return (new HeadOfUnitService())->getHeadOfUnitByUnitAndLocaltion($data["unit"], $data["location"])->user_id;
+    }
+    private function getCustomerZone(int $data)
+    {
+        $model = CustomerSite::find($data);
+        if ($model) {
+            return $model->ngml_zone_id;
+        }
+        return 0;
+    }
+
+    public function getTaskWithUserId($id)
+    {
+        $getTask = AutomatorTask::where(["user_id" => $id, "assignment_status" => AutomatorTask::UNASSIGNED])->get();
+        if ($getTask) {
+            return $getTask;
+        }
+        return false;
     }
 }

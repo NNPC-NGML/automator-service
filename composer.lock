@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8a5a1ea24688e8f641d8aae72166925b",
+    "content-hash": "a6186c46f77042bd73da95c9468f6395",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -62,16 +62,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.322.8",
+            "version": "3.322.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "fb5099160e49b676277ae787ff721628e5e4dd5a"
+                "reference": "0bd7513a7dd9b5330cb92575da99d9057f79b39c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/fb5099160e49b676277ae787ff721628e5e4dd5a",
-                "reference": "fb5099160e49b676277ae787ff721628e5e4dd5a",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/0bd7513a7dd9b5330cb92575da99d9057f79b39c",
+                "reference": "0bd7513a7dd9b5330cb92575da99d9057f79b39c",
                 "shasum": ""
             },
             "require": {
@@ -154,9 +154,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.322.8"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.322.9"
             },
-            "time": "2024-09-30T19:09:25+00:00"
+            "time": "2024-10-01T18:23:10+00:00"
         },
         {
             "name": "brick/math",
@@ -3962,6 +3962,37 @@
             "time": "2024-04-27T21:32:50+00:00"
         },
         {
+            "name": "skillz-systems/user-service",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Skillz-systems/skills_user_service_package.git",
+                "reference": "9c2b3e33fc1b30bcd4769d30ce8c8682fbf42708"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Skillz-systems/skills_user_service_package/zipball/9c2b3e33fc1b30bcd4769d30ce8c8682fbf42708",
+                "reference": "9c2b3e33fc1b30bcd4769d30ce8c8682fbf42708",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^10.10"
+            },
+            "default-branch": true,
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Skillz Systems",
+                    "email": "info@skillzsystems.com.ng"
+                }
+            ],
+            "support": {
+                "source": "https://github.com/Skillz-systems/skills_user_service_package/tree/main"
+            },
+            "time": "2024-07-22T12:35:56+00:00"
+        },
+        {
             "name": "skillz/nnpcreusable",
             "version": "v1.5.4",
             "source": {
@@ -6635,16 +6666,16 @@
         },
         {
             "name": "zircote/swagger-php",
-            "version": "4.10.6",
+            "version": "4.10.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zircote/swagger-php.git",
-                "reference": "e462ff5269ea0ec91070edd5d51dc7215bdea3b6"
+                "reference": "589821f0f1e2c083443749b52a31f077c524dbe6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zircote/swagger-php/zipball/e462ff5269ea0ec91070edd5d51dc7215bdea3b6",
-                "reference": "e462ff5269ea0ec91070edd5d51dc7215bdea3b6",
+                "url": "https://api.github.com/repos/zircote/swagger-php/zipball/589821f0f1e2c083443749b52a31f077c524dbe6",
+                "reference": "589821f0f1e2c083443749b52a31f077c524dbe6",
                 "shasum": ""
             },
             "require": {
@@ -6658,7 +6689,7 @@
             "require-dev": {
                 "composer/package-versions-deprecated": "^1.11",
                 "doctrine/annotations": "^1.7 || ^2.0",
-                "friendsofphp/php-cs-fixer": "^2.17 || ^3.47.1",
+                "friendsofphp/php-cs-fixer": "^2.17 || 3.62.0",
                 "phpstan/phpstan": "^1.6",
                 "phpunit/phpunit": ">=8",
                 "vimeo/psalm": "^4.23"
@@ -6710,9 +6741,9 @@
             ],
             "support": {
                 "issues": "https://github.com/zircote/swagger-php/issues",
-                "source": "https://github.com/zircote/swagger-php/tree/4.10.6"
+                "source": "https://github.com/zircote/swagger-php/tree/4.10.7"
             },
-            "time": "2024-07-26T03:04:43+00:00"
+            "time": "2024-10-02T01:43:50+00:00"
         }
     ],
     "packages-dev": [
@@ -9158,7 +9189,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "skillz-systems/user-service": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

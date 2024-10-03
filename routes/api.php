@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\AutomatorTaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,9 +18,7 @@ use App\Http\Controllers\TestController;
 
 
 Route::middleware('scope.user')->group(function () {
-    Route::get('/protected', function () {
-        return response()->json(['message' => 'Access granted']);
-    });
+    Route::get('/unassignedtasks', [AutomatorTaskController::class, 'getHeadOfUnitAssignableTask'])->name('unassignedtasks.getHeadOfUnitAssignableTask');
 });
 
 

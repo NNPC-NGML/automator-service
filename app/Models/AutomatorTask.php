@@ -26,6 +26,7 @@ class AutomatorTask extends Model
         "processflow_step_id",
         "assignment_status",
         "task_status",
+        "assignedBy",
 
     ];
 

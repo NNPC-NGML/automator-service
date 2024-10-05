@@ -19,6 +19,8 @@ use App\Http\Controllers\AutomatorTaskController;
 
 Route::middleware('scope.user')->group(function () {
     Route::get('/unassignedtasks', [AutomatorTaskController::class, 'getHeadOfUnitAssignableTask'])->name('unassignedtasks.getHeadOfUnitAssignableTask');
+    Route::get('/task-assignable-users/{id}', [AutomatorTaskController::class, 'getTaskAssignableUsers'])->name('task-assignable-users.getTaskAssignableUsers');
+    Route::post('/assign-task-to-user', [AutomatorTaskController::class, 'assignTaskToHeadOfUnitSubordinate'])->name('assign-task-to-user.assignTaskToHeadOfUnitSubordinate');
 });
 
 

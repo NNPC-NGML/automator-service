@@ -43,7 +43,7 @@ class AutomatorCreateQueue implements ShouldQueue
                     "processflow",
                     "processflowStep.route",
                 ])->first();
-            $convertedRoute = $this->routeConverter($newTask);
+            $convertedRoute = (new AutomatorTaskService())->routeConverter($newTask);
 
             $data = $newTask->toArray();
             $data["route"] = $convertedRoute;
@@ -54,21 +54,21 @@ class AutomatorCreateQueue implements ShouldQueue
         }
     }
 
-    private function routeConverter($data)
-    {
-        $routeData = $data->processflowStep->route;
-        $route = $routeData->link;
-        foreach (json_decode($routeData->dynamic_content)  as $dynamicRoute) {
-            switch ($dynamicRoute) {
-                case "customer_id":
-                    $route = $route . "/" . $data->entity_id;
-                    break;
-                case "customer_site_id":
-                    $route = $route . "/" . $data->entity_site_id;
-                    break;
-            }
-        }
+    // private function routeConverter($data)
+    // {
+    //     $routeData = $data->processflowStep->route;
+    //     $route = $routeData->link;
+    //     foreach (json_decode($routeData->dynamic_content)  as $dynamicRoute) {
+    //         switch ($dynamicRoute) {
+    //             case "customer_id":
+    //                 $route = $route . "/" . $data->entity_id;
+    //                 break;
+    //             case "customer_site_id":
+    //                 $route = $route . "/" . $data->entity_site_id;
+    //                 break;
+    //         }
+    //     }
 
-        return $route;
-    }
+    //     return $route;
+    // }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs\LocationAssignment;
+namespace App\Jobs\Location;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;

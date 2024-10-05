@@ -1,0 +1,353 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Automator Service ",
+        "version": "0.1"
+    },
+    "paths": {
+        "/api/unassignedtasks": {
+            "get": {
+                "tags": [
+                    "Automator Tasks"
+                ],
+                "summary": "Get head of unit's assignable tasks",
+                "description": "Retrieves tasks that are assigned to the head of the unit and can be further assigned to other users.",
+                "operationId": "getHeadOfUnitAssignableTask",
+                "responses": {
+                    "200": {
+                        "description": "Successful task retrieval",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/AutomatorTaskResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No tasks found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No tasks found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/task-assignable-users/{id}": {
+            "get": {
+                "tags": [
+                    "Automator Tasks"
+                ],
+                "summary": "Get assignable users for a task",
+                "description": "Retrieve users who can be assigned to a specific task based on process flow and user designation/unit.",
+                "operationId": "getTaskAssignableUsers",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the task",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of assignable users",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/UserResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Task not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Task not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/assign-task-to-user": {
+            "post": {
+                "tags": [
+                    "Automator Tasks"
+                ],
+                "summary": "Assign a task to a head of unit's subordinate",
+                "description": "This endpoint assigns a task to a user's subordinate and dispatches an event if the task is successfully assigned.",
+                "operationId": "assignTaskToHeadOfUnitSubordinate",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "task_id",
+                                    "user_id"
+                                ],
+                                "properties": {
+                                    "task_id": {
+                                        "description": "ID of the task to be assigned",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "user_id": {
+                                        "description": "ID of the user to whom the task is assigned",
+                                        "type": "integer",
+                                        "example": 2
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Task assigned successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Task assigned successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Task not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Task not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "AutomatorTaskResource": {
+                "title": "Automator Task Resource",
+                "description": "Automator task details",
+                "properties": {
+                    "id": {
+                        "description": "ID of the task",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "processflow_step": {
+                        "description": "The step of the processflow",
+                        "type": "string",
+                        "example": "Approval Step"
+                    },
+                    "processflow": {
+                        "description": "The associated processflow",
+                        "type": "string",
+                        "example": "Approval Process"
+                    },
+                    "task_status": {
+                        "description": "The current status of the task",
+                        "type": "string",
+                        "example": "Pending"
+                    },
+                    "assignment_status": {
+                        "description": "The assignment status of the task",
+                        "type": "string",
+                        "example": "Unassigned"
+                    },
+                    "processflow_history": {
+                        "description": "The history ID of the processflow",
+                        "type": "integer",
+                        "example": 15
+                    },
+                    "entity": {
+                        "description": "The entity associated with the task",
+                        "type": "string",
+                        "example": "Finance"
+                    },
+                    "entity_site_id": {
+                        "description": "The site ID of the entity",
+                        "type": "integer",
+                        "example": 12
+                    }
+                },
+                "type": "object"
+            },
+            "UserResource": {
+                "title": "User Resource",
+                "description": "User details for task assignment",
+                "properties": {
+                    "id": {
+                        "description": "User ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "description": "Full name of the user",
+                        "type": "string",
+                        "example": "John Doe"
+                    },
+                    "email": {
+                        "description": "User's email address",
+                        "type": "string",
+                        "example": "johndoe@example.com"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Automator Tasks",
+            "description": "Automator Tasks"
+        }
+    ]
+}

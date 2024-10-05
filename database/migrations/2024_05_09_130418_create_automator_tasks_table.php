@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('automator_tasks', function (Blueprint $table) {
             $table->id();
             $table->integer("processflow_history_id")->nullable()->comment("This column would hold the processflow history id, which comes from processflow service");
+            $table->integer("assignedBy")->nullable()->comment("This column would hold the  assigned By user id, keeping track of the user who assigned a particular task");
             $table->integer("formbuilder_data_id")->nullable()->comment("This column would hold the formbuilder data id, which can comes from processflow service or from formbuilder service");
             $table->string("entity")->nullable()->comment("This column would help to indicate if its a customer related task, supplies etc ");
             $table->integer("entity_id")->nullable()->comment("This column would hold the id of the entity");

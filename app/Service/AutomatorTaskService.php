@@ -2,13 +2,14 @@
 
 namespace App\Service;
 
+use App\Models\User;
 use App\Models\AutomatorTask;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Skillz\Nnpcreusable\Models\CustomerSite;
 use Skillz\Nnpcreusable\Models\HeadOfUnit;
+use Skillz\Nnpcreusable\Models\CustomerSite;
+use Illuminate\Validation\ValidationException;
 use Skillz\Nnpcreusable\Service\HeadOfUnitService;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class AutomatorTaskService
 {
@@ -87,6 +88,10 @@ class AutomatorTaskService
                     $newData["entity_id"] = $automatorTask->entity_id;
                 }
 
+                if (!empty($automatorTask->entity)) {
+                    $newData["entity"] = $automatorTask->entity;
+                }
+
                 if ($automatorTask->entity_site_id > 0) {
                     $newData["entity_site_id"] = $automatorTask->entity_site_id;
                 }
@@ -118,5 +123,45 @@ class AutomatorTaskService
             return $getTask;
         }
         return false;
+    }
+    public function getUserWithUnitAndDesignation($unitId, $designationId, $userId = 0)
+    {
+        $users = User::where('id', '!=', $userId)->whereHas('usersUnit', function ($query) use ($unitId) {
+            $query->where('unit_id', $unitId);
+        })->whereHas('userDesignation', function ($query) use ($designationId) {
+            $query->where('designation_id', $designationId);
+        })->get();
+        return $users;
+    }
+
+    public function assignTaskToUser($id, $userId, $assignedBy)
+    {
+        $task = AutomatorTask::find($id);
+        if (!$task) {
+            return false;
+        }
+        $task->user_id = $userId;
+        $task->assignedBy = $assignedBy;
+        $task->assignment_status = AutomatorTask::ASSIGNED;
+        $task->save();
+        return $task;
+    }
+
+    public function routeConverter($data)
+    {
+        $routeData = $data->processflowStep->route;
+        $route = $routeData->link;
+        foreach (json_decode($routeData->dynamic_content)  as $dynamicRoute) {
+            switch ($dynamicRoute) {
+                case "customer_id":
+                    $route = $route . "/" . $data->entity_id;
+                    break;
+                case "customer_site_id":
+                    $route = $route . "/" . $data->entity_site_id;
+                    break;
+            }
+        }
+
+        return $route;
     }
 }

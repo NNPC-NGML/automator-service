@@ -202,10 +202,19 @@ class AutomatorServiceTest extends TestCase
         ]);
         //$data = AutomatorTask::where(["id" => 1])->with([])->first();
         $response = (new AutomatorTaskService())->newTaskFromPreviousTask($automatorTask->toArray());
-        
+
         // assert that there is two task
         // asser that the respose is true
         $this->assertInstanceOf(AutomatorTask::class, $response);
         $this->assertDatabaseCount("automator_tasks", 2);
+    }
+
+    public function test_task_can_be_assigned_to_a_user()
+    {
+        $user = User::factory()->create();
+        $task = AutomatorTask::factory()->create();
+        $response = (new AutomatorTaskService())->assignTaskToUser($task->id, $user->id, $user->id);
+        $this->assertInstanceOf(AutomatorTask::class, $response);
+        $this->assertDatabaseHas("automator_tasks", ["user_id" => $user->id]);
     }
 }

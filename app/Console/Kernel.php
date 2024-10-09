@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Services\AutomatorTaskService;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -15,6 +16,10 @@ class Kernel extends ConsoleKernel
         $schedule->command('queue:work --stop-when-empty')
             ->everyMinute()
             ->withoutOverlapping();
+        $schedule->call(function () {
+            // Call your service to handle the task assignment
+            app(AutomatorTaskService::class)->TriggerFrequentProcessFlow();
+        })->everyMinute();
     }
 
     /**

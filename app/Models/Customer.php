@@ -9,4 +9,8 @@ use Skillz\Nnpcreusable\Models\Customer as ModelsCustomer;
 class Customer extends ModelsCustomer
 {
     use HasFactory;
+    public function customerSites()
+    {
+        return $this->hasMany(CustomerSite::class);
+    }
 }

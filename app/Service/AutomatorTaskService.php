@@ -3,13 +3,17 @@
 namespace App\Service;
 
 use App\Models\User;
+use App\Models\Customer;
+use App\Models\ProcessFlow;
 use App\Models\AutomatorTask;
 use Illuminate\Support\Facades\Validator;
 use Skillz\Nnpcreusable\Models\HeadOfUnit;
 use Skillz\Nnpcreusable\Models\CustomerSite;
 use Illuminate\Validation\ValidationException;
 use Skillz\Nnpcreusable\Service\HeadOfUnitService;
+use App\Jobs\AutomatorTask\AutomatorTaskCreateAssign;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Jobs\AutomatorTask\AutomatorProcessFlowFrequency;
 
 class AutomatorTaskService
 {
@@ -163,5 +167,91 @@ class AutomatorTaskService
         }
 
         return $route;
+    }
+    public function processFlowFrequency()
+    {
+        $processFlows = ProcessFlow::where('status', true)->get();
+
+        foreach ($processFlows as $processFlow) {
+            $shouldRun = false;
+            $now = now();
+
+            switch ($processFlow->frequency) {
+                case 'daily':
+                    $shouldRun = $processFlow->last_run === null || $processFlow->last_run->isBefore($now->startOfDay());
+                    break;
+                case 'weekly':
+                    $shouldRun = $processFlow->last_run === null || $processFlow->last_run->isBefore($now->startOfWeek());
+                    break;
+                case 'monthly':
+                    $shouldRun = $processFlow->last_run === null || $processFlow->last_run->isBefore($now->startOfMonth());
+                    break;
+                    // Handle other frequencies as needed
+            }
+
+            if ($shouldRun) {
+                AutomatorProcessFlowFrequency::dispatch($processFlow->toArray())->onQueue("automator_queue");
+                $processFlow->update(['last_run' => $now]);
+            }
+        }
+    }
+
+
+    public function handleFrequencyForCustomer($data)
+    {
+        //get all active customers
+        $customers = Customer::where('status', true)->with(["customerSites"])->get();
+        //return $customers;
+        if ($customers) {
+            foreach ($customers as $customer) {
+
+                if (count($customer->customerSites) > 0 && $customer->customerSites) {
+                    foreach ($customer->customerSites as $customerSite) {
+                        // remember to check that the site is an active site 
+                        $dispatchData = [
+                            "entity" => $customerSite->toArray(),
+                            "processflow" => $data
+                        ];
+                        AutomatorTaskCreateAssign::dispatch($dispatchData)->onQueue("automator_queue");
+                    }
+                }
+            }
+        }
+    }
+    public function handleFrequencyForSuppliers($data) {}
+    public function createAndAssignTaskToHeadOfUnit($data)
+    {
+        $newData = [];
+        $entity = $data["entity"];
+        $processflow = $data["processflow"];
+        // get head of unit
+        $headOfUnitData = [
+            "unit" => $processflow["start_user_unit"],
+            "location" => $entity["ngml_zone_id"],
+        ];
+        $headOfUnit = $this->getHeadOfUnit($headOfUnitData);
+        if ($headOfUnit) {
+            $newData["user_id"] = $headOfUnit;
+            $newData["assignment_status"] = AutomatorTask::UNASSIGNED;
+        }
+
+
+        switch ($processflow["frequency_for"]) {
+            case "customers":
+                $newData["entity"] = "customer";
+                $newData["entity_id"] = $entity["customer_id"];
+                $newData["entity_site_id"] = $entity["id"];
+                break;
+            case "suppliers":
+                $newData["entity"] = "supplier";
+                $newData["entity_id"] = $entity["supplier_id"];
+                break;
+        }
+
+
+        $newData["processflow_id"] = $processflow["id"];
+        $newData["processflow_step_id"] = $processflow["start_step_id"];
+        $newData["task_status"] = AutomatorTask::PENDING;
+        return $this->createTask($newData);
     }
 }

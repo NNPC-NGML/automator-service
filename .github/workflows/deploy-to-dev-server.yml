@@ -54,11 +54,11 @@ jobs:
       - name: Install rsync
         run: sudo apt-get install -y rsync
 
-      # - name: Find and replace nnpc reusable env variables
-      #   run: |
-      #     sed -i -e 's:AUTOMATOR_TASK_CREATED=forge:AUTOMATOR_TASK_CREATED=sample1,sample2:g' .env &&
-      #     sed -i -e 's:AUTOMATOR_TASK_UPDATED=forge:AUTOMATOR_TASK_UPDATED=sample1,sample2:g' .env &&
-      #     sed -i -e 's:AUTOMATOR_TASK_DELETED=forge:AUTOMATOR_TASK_DELETED=sample1,sample2:g' .env &&
+      - name: Find and replace nnpc reusable env variables
+        run: |
+          sed -i -e 's:AUTOMATOR_TASK_CREATED=forge:AUTOMATOR_TASK_CREATED=formbuilder_queue,notification_queue,processflow_queue:g' .env &&
+          sed -i -e 's:AUTOMATOR_TASK_UPDATED=forge:AUTOMATOR_TASK_UPDATED=formbuilder_queue,notification_queue,processflow_queue:g' .env &&
+          sed -i -e 's:AUTOMATOR_TASK_DELETED=forge:AUTOMATOR_TASK_DELETED=formbuilder_queue,notification_queue,processflow_queue:g' .env &&
       #     sed -i -e 's:CUSTOMER_CREATED=forge:CUSTOMER_CREATED=sample1,sample2:g' .env &&
       #     sed -i -e 's:CUSTOMER_UPDATED=forge:CUSTOMER_UPDATED=sample1,sample2:g' .env &&
       #     sed -i -e 's:CUSTOMER_DELETED=forge:CUSTOMER_DELETED=sample1,sample2:g' .env &&
@@ -128,4 +128,4 @@ jobs:
 
       - name: SSH and effect migration
         run: |
-          ssh -p 7822 -i ~/.ssh/id_rsa -t skillz@103.72.76.68 "cd nnpc/api/automator && php artisan migrate"
+          ssh -p 7822 -i ~/.ssh/id_rsa -t skillz@103.72.76.68 "cd nnpc/api/automator && php artisan migrate:fresh"

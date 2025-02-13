@@ -68,6 +68,7 @@ class AutomatorTaskController extends Controller
     public function getHeadOfUnitAssignableTask()
     {
         $userId = auth()->id();
+
         $task = $this->automatorTaskService->getTaskWithUserId($userId);
         return AutomatorTaskResource::collection($task)->additional(['status' => 'success']);
     }
@@ -124,6 +125,7 @@ class AutomatorTaskController extends Controller
     public function getTaskAssignableUsers($id)
     {
         $userId = auth()->id();
+
         $task = $this->automatorTaskService->getTask($id);
 
         if ($task) {

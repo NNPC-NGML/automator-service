@@ -41,7 +41,10 @@ class AutomatorTaskService
     {
         $getTask = AutomatorTask::findOrFail($id);
         if ($getTask) {
-            $updateTask = $getTask->update($data);
+            $filteredData = array_filter($data, function ($value) {
+                return !is_null($value);
+            });
+            $updateTask = $getTask->update($filteredData);
             return $updateTask;
         }
         return false;
@@ -65,7 +68,7 @@ class AutomatorTaskService
     public function newTaskFromPreviousTask($data)
     {
         //get automator task with relationship
-        $automatorTask = AutomatorTask::find($data["id"])->with(["processflowHistory", "processflow", "processflowStep"])->first();
+        $automatorTask = AutomatorTask::where(["id" => $data["id"]])->with(["processflowHistory", "processflow", "processflowStep"])->first();
         if ($automatorTask) {
             if ($automatorTask->processflowStep->next_step_id > 0) {
                 $newData = [];
@@ -111,7 +114,7 @@ class AutomatorTaskService
     {
         return (new HeadOfUnitService())->getHeadOfUnitByUnitAndLocaltion($data["unit"], $data["location"])->user_id;
     }
-    private function getCustomerZone(int $data)
+    private function getCustomerZone($data)
     {
         $model = CustomerSite::find($data);
         if ($model) {
@@ -156,19 +159,24 @@ class AutomatorTaskService
         $routeData = $data->processflowStep->route;
         $route = $routeData->link;
         foreach (json_decode($routeData->dynamic_content)  as $dynamicRoute) {
-            switch ($dynamicRoute) {
-                case "customer_id":
-                    $route = $route . "/" . $data->entity_id;
-                    break;
-                case "customer_site_id":
-                    $route = $route . "/" . $data->entity_site_id;
-                    break;
+            $pattern = '/(.+)[\*_]id$/';
+            if (preg_match($pattern, $dynamicRoute, $matches)) {
+                switch ($dynamicRoute) {
+                    case "customer_id":
+                        $route = $route . "/" . $data->entity_id;
+                        break;
+                    case "customer_site_id":
+                        $route = $route . "/" . $data->entity_site_id;
+                        break;
+                }
+            } else {
+                $route = $route . "/" . $dynamicRoute;
             }
         }
 
         return $route;
     }
-    public function processFlowFrequency()
+    public function TriggerFrequentProcessFlow()
     {
         $processFlows = ProcessFlow::where('status', true)->get();
 

@@ -2,13 +2,14 @@
 
 namespace App\Jobs\Customer;
 
-use Skillz\Nnpcreusable\Models\Customer;
 use Illuminate\Bus\Queueable;
-use Skillz\Nnpcreusable\Service\CustomerService;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
+use Skillz\Nnpcreusable\Models\Customer;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Skillz\Nnpcreusable\Service\CustomerService;
 
 class CustomerCreated implements ShouldQueue
 {
@@ -19,7 +20,7 @@ class CustomerCreated implements ShouldQueue
      *
      * @var array
      */
-    public array $data;
+    public array $data = [];
 
     /**
      * Create a new job instance.
@@ -38,7 +39,6 @@ class CustomerCreated implements ShouldQueue
      */
     public function handle(): void
     {
-
         $service = new  CustomerService();
         $service->createCustomer($this->data);
     }

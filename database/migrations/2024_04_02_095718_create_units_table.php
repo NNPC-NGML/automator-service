@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('units', function (Blueprint $table) {
             $table->unsignedBigInteger('id')->primary();
             $table->unsignedBigInteger('department_id');
-            //$table->foreign('department_id')->references('id')->on('departments');
-            // $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');
             $table->string('name')->comment('get the name of the unit from the user service');
             $table->timestamps();
         });

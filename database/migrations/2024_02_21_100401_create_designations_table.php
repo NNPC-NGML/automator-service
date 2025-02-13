@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('designations', function (Blueprint $table) {
             $table->unsignedBigInteger('id')->primary();
-            $table->string('name')->comment('get the name of the designation from the user service');
+            $table->string('role');
+            $table->string('description');
+            $table->string('level')->nullable();
+            $table->integer('status')->default('1'); ///To disable or enable a department
             $table->timestamps();
         });
     }

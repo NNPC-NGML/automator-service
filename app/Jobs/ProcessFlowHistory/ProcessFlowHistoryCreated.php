@@ -41,14 +41,14 @@ class ProcessFlowHistoryCreated implements ShouldQueue
         $jobData = [
             "processflow_history_id" => $this->data["id"],
             "formbuilder_data_id" => $this->data["formbuilder_data_id"],
-            "entity" => $this->data["for"],
-            "entity_id" => $this->data["for_id"],
-            "entity_site_id" => $this->data["for_site_id"],
-            "user_id" => $this->data["user_id"],
-            "processflow_id" => $this->data["process_flow_id"],
-            "processflow_step_id" => $this->data["processflow_step_id"],
-            "form_builder_id" => $this->data["form_builder_id"],
-            "task_id" => $this->data["task_id"],
+            "entity" => isset($this->data["for"]) ? $this->data["for"] : null,
+            "entity_id" => isset($this->data["for_id"]) ? $this->data["for_id"] : null,
+            "entity_site_id" => isset($this->data["for_site_id"]) ? $this->data["for_site_id"] : null,
+            "user_id" => isset($this->data["user_id"]) ? $this->data["user_id"] : null,
+            "processflow_id" => isset($this->data["process_flow_id"]) ? $this->data["process_flow_id"] : null,
+            "processflow_step_id" => isset($this->data["processflow_step_id"]) ? $this->data["processflow_step_id"] : null,
+            "form_builder_id" => isset($this->data["form_builder_id"]) ? $this->data["form_builder_id"] : null,
+            "task_id" => isset($this->data["task_id"]) ? $this->data["task_id"] : null,
 
         ];
 

@@ -43,6 +43,6 @@ class AutomatorTask extends Model
 
     public function processflowStep()
     {
-        return $this->belongsTo(ProcessFlowStep::class, "processflow_id", "id");
+        return $this->belongsTo(ProcessFlowStep::class, "processflow_step_id", "id");
     }
 }

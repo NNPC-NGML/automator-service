@@ -30,6 +30,7 @@ class AutomatorTaskControllerTest extends TestCase
      */
     public function test_get_all_task_assigned_to_a_particular_head_of_unit(): void
     {
+
         $location =  Location::factory()->create();
         $department = Department::factory()->create();
         $unit = Unit::factory()->create();
@@ -195,6 +196,7 @@ class AutomatorTaskControllerTest extends TestCase
         $newAutomatorTask = (new AutomatorTaskService())->newTaskFromPreviousTask($automatorTask->toArray());
         $this->actingAsAuthenticatedTestUser();
         $response = $this->getJson('/api/task-assignable-users/' . $newAutomatorTask->id);
+
         $response->assertOk()->assertJsonStructure([
             "data" => [
                 "*" => [

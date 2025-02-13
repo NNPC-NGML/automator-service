@@ -4,7 +4,6 @@ namespace App\Jobs\FormData;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\Log;
-use App\Services\AutomatorTaskService;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -32,6 +31,7 @@ class FormDataUpdated implements ShouldQueue
      */
     public function handle(): void
     {
+        Log::info("Dispatching FormDataUpdated event to queue: ", ["data" => $this->data]);
         // match incoming data key with automator task data key 
         $jobData = [
             //formBuilder
@@ -41,11 +41,10 @@ class FormDataUpdated implements ShouldQueue
             "entity_id" => $this->data["entity_id"],
             "entity_site_id" => $this->data["entity_site_id"],
             "user_id" => $this->data["user_id"],
-            "processflow_id" => $this->data["formBuilder"]["process_flow_id"],
-            "processflow_step_id" => $this->data["formBuilder"]["process_flow_step_id"],
-            "form_builder_id" => $this->data["formBuilder"]["id"],
+            "processflow_id" => $this->data["form_builder"]["process_flow_id"],
+            "processflow_step_id" => $this->data["form_builder"]["process_flow_step_id"],
+            "form_builder_id" => $this->data["form_builder"]["id"],
             "task_id" => $this->data["automator_task_id"],
-
         ];
         $service = new ServiceAutomatorTaskService();
         if (!$this->data["status"]) {
@@ -70,7 +69,10 @@ class FormDataUpdated implements ShouldQueue
                     }
                 }
                 if ($status) {
-                    $service->updateTask($jobData["task_id"], ["task_status" => 1]);
+                    if (!is_null($this->data["form_field_answers"])) {
+                        $service->updateTask($jobData["task_id"], ["task_status" => 1]);
+                    }
+
                     $getTask = $service->getTask($jobData["task_id"]);
                 }
 
@@ -82,6 +84,7 @@ class FormDataUpdated implements ShouldQueue
         }
 
         if ($this->data["status"]) {
+            Log::info(" last part: ", ["data" => $this->data]);
             $getTask = $service->getTask($jobData["task_id"]);
             //if the status is 1  then push to AutomatorCreateQueue
             AutomatorCreateQueue::dispatch($getTask->toArray())->onQueue("automator_queue");

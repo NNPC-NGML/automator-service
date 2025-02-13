@@ -11,7 +11,7 @@ use Illuminate\Queue\SerializesModels;
 class AutomatorTaskCreated implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    public $data;
+    private $data;
 
     /**
      * Create a new job instance.

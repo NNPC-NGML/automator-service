@@ -29,7 +29,9 @@ jobs:
         run: CI=false composer clear-cache && CI=false composer update && CI=false php artisan key:generate
 
       - name: Run Tests
-        run: CI=false php artisan test
+        run: |
+          CI=false php artisan test
+          echo "Exit code: $?"
 
   deploy-automator-dev:
     runs-on: ubuntu-latest
@@ -58,7 +60,7 @@ jobs:
         run: |
           sed -i -e 's:AUTOMATOR_TASK_CREATED=forge:AUTOMATOR_TASK_CREATED=formbuilder_queue,notification_queue,processflow_queue:g' .env &&
           sed -i -e 's:AUTOMATOR_TASK_UPDATED=forge:AUTOMATOR_TASK_UPDATED=formbuilder_queue,notification_queue,processflow_queue:g' .env &&
-          sed -i -e 's:AUTOMATOR_TASK_DELETED=forge:AUTOMATOR_TASK_DELETED=formbuilder_queue,notification_queue,processflow_queue:g' .env &&
+          sed -i -e 's:AUTOMATOR_TASK_DELETED=forge:AUTOMATOR_TASK_DELETED=formbuilder_queue,notification_queue,processflow_queue:g' .env
       #     sed -i -e 's:CUSTOMER_CREATED=forge:CUSTOMER_CREATED=sample1,sample2:g' .env &&
       #     sed -i -e 's:CUSTOMER_UPDATED=forge:CUSTOMER_UPDATED=sample1,sample2:g' .env &&
       #     sed -i -e 's:CUSTOMER_DELETED=forge:CUSTOMER_DELETED=sample1,sample2:g' .env &&

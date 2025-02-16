@@ -14,19 +14,22 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('queue:work --stop-when-empty')
-        //     ->everyMinute()
-        //     ->withoutOverlapping();
-        while (true) {
-            Artisan::call('queue:work', [
-                '--stop-when-empty' => true,
-            ]);
-            usleep(500000); // 0.5 seconds (500,000 microseconds)
-        }
+        $schedule->command('queue:work --stop-when-empty')->everyMinute();
         $schedule->call(function () {
             // Call your service to handle the task assignment
             app(AutomatorTaskService::class)->TriggerFrequentProcessFlow();
         })->everyMinute();
+
+        // while (true) {
+        //     Artisan::call('queue:work', [
+        //         '--stop-when-empty' => true,
+        //     ]);
+        //     usleep(500000); // 0.5 seconds (500,000 microseconds)
+        // }
+        // $schedule->call(function () {
+        //     // Call your service to handle the task assignment
+        //     app(AutomatorTaskService::class)->TriggerFrequentProcessFlow();
+        // })->everyMinute();
     }
 
     /**
